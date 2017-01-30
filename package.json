@@ -1,0 +1,24 @@
+{
+  "name": "zum-zitieren",
+  "version": "1.0.0",
+  "description": "Wie man am JOUR Institut der FH WKW zitieren soll.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Konstantin Kovar",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-es2015": "^6.18.0",
+    "css-loader": "^0.26.1",
+    "expose-loader": "^0.7.1",
+    "loader-utils": "^0.2.16",
+    "node-sass": "^4.0.0",
+    "sass-loader": "^4.1.0",
+    "style-loader": "^0.13.1"
+  }
+}

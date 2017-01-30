@@ -1,0 +1,32 @@
+html {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  margin-bottom: 1em;
+  margin: auto;
+  flex-direction: column;
+    &--main {
+      max-width: 50em;
+    }
+}
+
+.source {
+
+  &--kind{
+    flex-direction: row;
+  }
+}
+
+.button {
+  background-color: #002d65;
+  padding: 1em;
+  margin: 1em;
+  text-align: center;
+}
+
+input {
+  margin-top: 1.5em;
+}
