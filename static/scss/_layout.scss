@@ -25,6 +25,9 @@ html {
   padding: 1em;
   margin: 1em;
   text-align: center;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 input {
