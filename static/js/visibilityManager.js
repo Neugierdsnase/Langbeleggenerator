@@ -5,13 +5,14 @@
 function magicCloak (source) {
   function disappear(arrayOfUnwantedFields) {
     for (let i=0;i<arrayOfUnwantedFields.length;i++) {
-      arrayOfUnwantedFields[i][0].classList.toggle('invisible');
+        arrayOfUnwantedFields[i][0].classList.add('invisible');
+      }
     }
-  }
   switch (source) {
     case "Monografie":
       disappear([document.getElementsByClassName('source--url'),
                 document.getElementsByClassName('source--editor'),
+                document.getElementsByClassName('source--editor--button'),
                 document.getElementsByClassName('source--pages'),
                 document.getElementsByClassName('source--title--contribution'),
                 document.getElementsByClassName('source--journal'),
@@ -24,13 +25,18 @@ function magicCloak (source) {
       break;
     case "Artikel in Fachzeitschriften":
       disappear([document.getElementsByClassName('source--url'),
+                document.getElementsByClassName('source--title--sub'),
                 document.getElementsByClassName('source--editor'),
+                document.getElementsByClassName('source--editor--button'),
                 document.getElementsByClassName('source--edition'),
-                document.getElementsByClassName('source--uni')])
+                document.getElementsByClassName('source--uni'),
+                document.getElementsByClassName('source--publisher')])
       break;
     case "Onlinequelle":
       disappear([document.getElementsByClassName('source--title'),
+                document.getElementsByClassName('source--title--sub'),
                 document.getElementsByClassName('source--editor'),
+                document.getElementsByClassName('source--editor--button'),
                 document.getElementsByClassName('source--publisher'),
                 document.getElementsByClassName('source--edition'),
                 document.getElementsByClassName('source--journal'),
@@ -40,6 +46,7 @@ function magicCloak (source) {
     case "Hochschulschrift":
     disappear([document.getElementsByClassName('source--title--contribution'),
               document.getElementsByClassName('source--editor'),
+              document.getElementsByClassName('source--editor--button'),
               document.getElementsByClassName('source--publisher'),
               document.getElementsByClassName('source--url'),
               document.getElementsByClassName('source--journal')])
@@ -51,6 +58,14 @@ function magicCloak (source) {
 
 //gets the kind of source
 function checkKindOfSource () {
+  let invisElems = document.getElementsByClassName('invisible');
+  //let's make all boxes visible
+  for (let i=0;i<invisElems.length;i++) {
+    invisElems[i].classList.remove('invisible');
+  }
+};
+
+function sourceChecker () {
   let kindOfSource;
   let options = document.getElementsByName('kind');
   for (let i=0;i<options.length;i++) {
@@ -58,15 +73,14 @@ function checkKindOfSource () {
         kindOfSource = options[i].value;
     }
   }
-  //let's make all boxes visible
-  for (let i=0;i<document.getElementsByClassName('invisible').length;i++) {
-    document.getElementsByClassName('invisible')[0].classList.toggle('invisible');
-  }
-  //this function makes the appropriate boxes disappear
-  magicCloak(kindOfSource);
-};
+  return kindOfSource;
+}
 
-
+function makesBoxesDisappear() {
+  checkKindOfSource()
+  let source = sourceChecker();
+  magicCloak(source);
+}
 
 //this function appends more author inputs in case there are multiple authors
 function multipleAuthors () {
@@ -90,4 +104,5 @@ function multipleEditors () {
 
 module.exports = {moreAuthors : multipleAuthors,
                   moreEditors : multipleEditors,
-                  sourceKind : checkKindOfSource};
+                  sourceKind : makesBoxesDisappear,
+                  sourceChecker: sourceChecker};

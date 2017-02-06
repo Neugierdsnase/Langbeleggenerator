@@ -420,8 +420,31 @@
 	var sourceKind = document.getElementsByClassName('source--kind')[0];
 	sourceKind.addEventListener("click", visibilityManager.sourceKind, false);
 
-	var button = document.getElementById('generator');
-	button.addEventListener("click", model.monography, false);
+	function generationTrigger() {
+	  var kindOfSource = visibilityManager.sourceChecker();
+	  switch (kindOfSource) {
+	    case "Monografie":
+	      model.monography();
+	      break;
+	    case "Beitrag in Sammelwerken":
+	      model.contribution();
+	      break;
+	    case "Artikel in Fachzeitschriften":
+	      model.article();
+	      break;
+	    case "Onlinequelle":
+	      model.online();
+	      break;
+	    case "Hochschulschrift":
+	      model.academic();
+	      break;
+	    default:
+	      break;
+	  }
+	}
+
+	var mainButton = document.getElementById('generator');
+	mainButton.addEventListener("click", generationTrigger, false);
 
 /***/ },
 /* 6 */
@@ -430,31 +453,42 @@
 	"use strict";
 
 	var solution = void 0,
-
-	//authorFirstName,
-	//authorLastName,
-	authorsNames = void 0,
+	    authorsNames = void 0,
 	    titleMain = void 0,
 	    titleSub = void 0,
+	    titleArticle = void 0,
 	    publisher = void 0,
 	    publisherPlace = void 0,
 	    publishingYear = void 0,
 	    url = void 0,
-	    editorFirstName = void 0,
-	    editorLastName = void 0,
+	    onlineReleaseDate = void 0,
+	    onlineViewDate = void 0,
+	    editorsNames = void 0,
 	    edition = void 0,
-	    articlePages = void 0;
+	    articlePages = void 0,
+	    articleYear = void 0,
+	    articleCount = void 0,
+	    uni = void 0,
+	    institute = void 0;
 
 	//gathers the data from all the form fields using vanilla js like a baws
 	function gatherData() {
-	  //authorFirstName = document.getElementsByClassName("author--name--first")[0].value;
-	  //authorLastName = document.getElementsByClassName("author--name--last")[0].value;
 	  authorsNames = authorCreator();
+	  editorsNames = editorCreator();
 	  titleMain = document.getElementsByClassName("title--main")[0].value;
 	  titleSub = document.getElementsByClassName("title--sub")[0].value;
+	  titleArticle = document.getElementsByClassName("title--contribution")[0].value;
 	  publisher = document.getElementsByClassName("publisher--name")[0].value;
 	  publisherPlace = document.getElementsByClassName("publisher--place")[0].value;
-	  publishingYear = document.getElementsByClassName("title--year")[0].value;
+	  publishingYear = document.getElementsByClassName("year")[0].value;
+	  edition = document.getElementsByClassName("edition")[0].value, articlePages = document.getElementsByClassName("pages")[0].value;
+	  articleYear = document.getElementsByClassName("journal-year")[0].value;
+	  articleCount = document.getElementsByClassName("journal-count")[0].value;
+	  url = document.getElementsByClassName("url")[0].value;
+	  onlineReleaseDate = document.getElementsByClassName("url--date--release")[0].value;
+	  onlineViewDate = document.getElementsByClassName("url--date--watched")[0].value;
+	  uni = document.getElementsByClassName("uni--which")[0].value;
+	  institute = document.getElementsByClassName("uni--institute")[0].value;
 	}
 
 	//takes care of the different numbers of author inputs there might be (1, 2 or more)
@@ -483,13 +517,78 @@
 	  }
 	}
 
+	//takes care of the different numbers of editor inputs there might be (1, 2 or more)
+	function editorCreator() {
+	  var allEditorsFirstNamesArray = document.getElementsByClassName("editor--name--first");
+	  var allEditorsLastNamesArray = document.getElementsByClassName("editor--name--last");
+	  if (allEditorsLastNamesArray.length !== allEditorsFirstNamesArray.length) {
+	    console.error("Uh oh! There is something wrong with your editors, please check your input!");
+	  }
+	  if (allEditorsLastNamesArray.length === 1) {
+	    return allEditorsLastNamesArray[0].value + ', ' + allEditorsFirstNamesArray[0].value;
+	  } else if (allEditorsLastNamesArray.length === 2) {
+	    return allEditorsLastNamesArray[0].value + ', ' + allEditorsFirstNamesArray.value[0] + ' & ' + allAuthorsLastNamesArray[1].value + ', ' + allAuthorsFirstNamesArray[1].value;
+	  } else if (allEditorsLastNamesArray.length >= 2) {
+	    var sol = '';
+	    var i = 0;
+	    while (i < allEditorsorsLastNamesArray.length - 2) {
+	      sol += allEditorsLastNamesArray[i].value + ', ' + allEditorsFirstNamesArray[i].value + '; ';
+	      i++;
+	    }
+	    sol += allEditorsLastNamesArray[i].value + ', ' + allEditorsFirstNamesArray[i].value + ' & ';
+	    sol += allEditorsLastNamesArray[i + 1].value + ', ' + allEditorsFirstNamesArray[i + 1].value;
+	    return sol;
+	  } else {
+	    console.error("No editors found.");
+	  }
+	}
+
+	function voluntairyInput(formfield) {
+	  var prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+	  var postfix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+
+	  if (formfield !== "") {
+	    return prefix + formfield + postfix;
+	  } else {
+	    return "";
+	  }
+	}
+
 	function generateMonography() {
 	  gatherData();
-	  solution = "\n    " + authorsNames + " (" + publishingYear + "). " + titleMain + ": " + titleSub + ". " + publisherPlace + ": " + publisher + ".\n  ";
+	  solution = "\n    " + authorsNames + " (" + publishingYear + ").\n    " + titleMain + voluntairyInput(titleSub, ": ") + "\n    " + voluntairyInput(edition, " (", ". Aufl.)") + ".\n    " + publisherPlace + ": " + publisher + ".\n  ";
 	  document.getElementById('langbeleg').innerHTML = solution;
 	};
 
-	module.exports = { monography: generateMonography };
+	function generateContribution() {
+	  gatherData();
+	  solution = "\n    " + authorsNames + " (" + publishingYear + ").\n    " + titleArticle + ". In " + editorsNames + " (Hrsg.),\n    " + titleMain + voluntairyInput(titleSub, ": ") + "\n    (" + voluntairyInput(edition, "", ". Aufl.") + "\n    S. " + articlePages + "). " + publisherPlace + ": " + publisher + ".\n  ";
+	  document.getElementById('langbeleg').innerHTML = solution;
+	}
+
+	function generateArticle() {
+	  gatherData();
+	  solution = "\n    " + authorsNames + " (" + publishingYear + ").\n    " + titleArticle + ". In " + titleMain + ",\n    " + articleYear + " (" + articleCount + "), S. " + articlePages + ".\n    ";
+	  document.getElementById('langbeleg').innerHTML = solution;
+	}
+
+	function generateOnlineSource() {
+	  gatherData();
+	  solution = "\n      " + authorsNames + " (" + publishingYear + ").\n      " + titleArticle + voluntairyInput(onlineReleaseDate, " (", ")") + ".\n      Verf\xFCgbar unter " + url + " [" + onlineViewDate + "].\n    ";
+	  document.getElementById('langbeleg').innerHTML = solution;
+	}
+
+	function generateAcademicSource() {
+	  gatherData();
+	  solution = "\n    " + authorsNames + " (" + publishingYear + ").\n    Diplomarbeit: " + uni + voluntairyInput(institute, ", ") + ".\n  ";
+	  document.getElementById('langbeleg').innerHTML = solution;
+	}
+
+	module.exports = { monography: generateMonography,
+	  contribution: generateContribution,
+	  article: generateArticle,
+	  online: generateOnlineSource,
+	  academic: generateAcademicSource };
 
 /***/ },
 /* 7 */
@@ -504,24 +603,24 @@
 	function magicCloak(source) {
 	  function disappear(arrayOfUnwantedFields) {
 	    for (var i = 0; i < arrayOfUnwantedFields.length; i++) {
-	      arrayOfUnwantedFields[i][0].classList.toggle('invisible');
+	      arrayOfUnwantedFields[i][0].classList.add('invisible');
 	    }
 	  }
 	  switch (source) {
 	    case "Monografie":
-	      disappear([document.getElementsByClassName('source--url'), document.getElementsByClassName('source--editor'), document.getElementsByClassName('source--pages'), document.getElementsByClassName('source--title--contribution'), document.getElementsByClassName('source--journal'), document.getElementsByClassName('source--uni')]);
+	      disappear([document.getElementsByClassName('source--url'), document.getElementsByClassName('source--editor'), document.getElementsByClassName('source--editor--button'), document.getElementsByClassName('source--pages'), document.getElementsByClassName('source--title--contribution'), document.getElementsByClassName('source--journal'), document.getElementsByClassName('source--uni')]);
 	      break;
 	    case "Beitrag in Sammelwerken":
 	      disappear([document.getElementsByClassName('source--url'), document.getElementsByClassName('source--journal'), document.getElementsByClassName('source--uni')]);
 	      break;
 	    case "Artikel in Fachzeitschriften":
-	      disappear([document.getElementsByClassName('source--url'), document.getElementsByClassName('source--editor'), document.getElementsByClassName('source--edition'), document.getElementsByClassName('source--uni')]);
+	      disappear([document.getElementsByClassName('source--url'), document.getElementsByClassName('source--title--sub'), document.getElementsByClassName('source--editor'), document.getElementsByClassName('source--editor--button'), document.getElementsByClassName('source--edition'), document.getElementsByClassName('source--uni'), document.getElementsByClassName('source--publisher')]);
 	      break;
 	    case "Onlinequelle":
-	      disappear([document.getElementsByClassName('source--title'), document.getElementsByClassName('source--editor'), document.getElementsByClassName('source--publisher'), document.getElementsByClassName('source--edition'), document.getElementsByClassName('source--journal'), document.getElementsByClassName('source--pages'), document.getElementsByClassName('source--uni')]);
+	      disappear([document.getElementsByClassName('source--title'), document.getElementsByClassName('source--title--sub'), document.getElementsByClassName('source--editor'), document.getElementsByClassName('source--editor--button'), document.getElementsByClassName('source--publisher'), document.getElementsByClassName('source--edition'), document.getElementsByClassName('source--journal'), document.getElementsByClassName('source--pages'), document.getElementsByClassName('source--uni')]);
 	      break;
 	    case "Hochschulschrift":
-	      disappear([document.getElementsByClassName('source--title--contribution'), document.getElementsByClassName('source--editor'), document.getElementsByClassName('source--publisher'), document.getElementsByClassName('source--url'), document.getElementsByClassName('source--journal')]);
+	      disappear([document.getElementsByClassName('source--title--contribution'), document.getElementsByClassName('source--editor'), document.getElementsByClassName('source--editor--button'), document.getElementsByClassName('source--publisher'), document.getElementsByClassName('source--url'), document.getElementsByClassName('source--journal')]);
 	      break;
 	    default:
 	      break;
@@ -530,6 +629,14 @@
 
 	//gets the kind of source
 	function checkKindOfSource() {
+	  var invisElems = document.getElementsByClassName('invisible');
+	  //let's make all boxes visible
+	  for (var i = 0; i < invisElems.length; i++) {
+	    invisElems[i].classList.remove('invisible');
+	  }
+	};
+
+	function sourceChecker() {
 	  var kindOfSource = void 0;
 	  var options = document.getElementsByName('kind');
 	  for (var i = 0; i < options.length; i++) {
@@ -537,13 +644,14 @@
 	      kindOfSource = options[i].value;
 	    }
 	  }
-	  //let's make all boxes visible
-	  for (var _i = 0; _i < document.getElementsByClassName('invisible').length; _i++) {
-	    document.getElementsByClassName('invisible')[0].classList.toggle('invisible');
-	  }
-	  //this function makes the appropriate boxes disappear
-	  magicCloak(kindOfSource);
-	};
+	  return kindOfSource;
+	}
+
+	function makesBoxesDisappear() {
+	  checkKindOfSource();
+	  var source = sourceChecker();
+	  magicCloak(source);
+	}
 
 	//this function appends more author inputs in case there are multiple authors
 	function multipleAuthors() {
@@ -561,7 +669,8 @@
 
 	module.exports = { moreAuthors: multipleAuthors,
 	  moreEditors: multipleEditors,
-	  sourceKind: checkKindOfSource };
+	  sourceKind: makesBoxesDisappear,
+	  sourceChecker: sourceChecker };
 
 /***/ }
 /******/ ]);

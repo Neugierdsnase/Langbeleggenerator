@@ -13,5 +13,28 @@ editorAdder.addEventListener("click", visibilityManager.moreEditors, false);
 let sourceKind = document.getElementsByClassName('source--kind')[0];
 sourceKind.addEventListener("click", visibilityManager.sourceKind, false);
 
-let button = document.getElementById('generator');
-button.addEventListener("click", model.monography, false);
+function generationTrigger () {
+  let kindOfSource = visibilityManager.sourceChecker();
+  switch (kindOfSource) {
+    case "Monografie":
+      model.monography();
+      break;
+    case "Beitrag in Sammelwerken":
+      model.contribution();
+      break;
+    case "Artikel in Fachzeitschriften":
+      model.article();
+      break;
+    case "Onlinequelle":
+      model.online();
+      break;
+    case "Hochschulschrift":
+      model.academic();
+      break;
+    default:
+      break;
+  }
+}
+
+let mainButton = document.getElementById('generator');
+mainButton.addEventListener("click", generationTrigger, false);
