@@ -6,6 +6,9 @@
     <title>Zitation</title>
   </head>
   <body>
+    <div id="about">
+      <p>about</p>
+    </div>
     <div class="container--main">
       <div class="source--kind container">
         <div class="kind-of-source">
@@ -25,54 +28,14 @@
         </div>
       </div>
       <div class="container--inputs" id="input-wrapper">
-        <div class="source--author container">
-          <input type="text" class="author--name--first"> Vorname AutorIn
-          <input type="text" class="author--name--last"> Nachname AutorIn
-        </div>
-        <div class="button" id="add-author">AutorIn hinzufügen</div>
-        <div class="source--title--contribution container">
-          <input type="text" class="title--contribution"> Titel des Beitrags/Artikels
-        </div>
-        <div class="source--title container">
-          <input type="text" class="title--main"> Haupttitel des Buches/der Zeitschrift
-        </div>
-        <div class="source--title--sub container">
-          <input type="text" class="title--sub"> Untertitel des Buches
-        </div>
-        <div class="source--year container">
-          <input type="text" class="year"> Erscheinungsjahr ("o.J." wenn nicht bekannt)
-        </div>
-        <div class="source--publisher container">
-          <input type="text" class="publisher--name"> Verlag
-          <input type="text" class="publisher--place"> Verlagsort (mehrere Verlagsorte durch ; trennen)
-        </div>
-        <div class="source--url container">
-          <input type="text" class="url"> Url der Quelle
-          <input type="text" class="url--date--release"> Veröffentlichungsdatum
-          <input type="text" class="url--date--watched"> Datum des letzten Zugriffs
-        </div>
-        <div class="source--editor container">
-          <input type="text" class="editor--name--first"> Vorname HerausgeberIn
-          <input type="text" class="editor--name--last">  Nachname HerausgeberIn
-        </div>
-        <div class="button source--editor--button" id="add-editor">HerausgeberIn hinzufügen</div>
-        <div class="source--edition container">
-          <input type="text" class="edition"> Auflage
-        </div>
-        <div class="source--journal container">
-          <input type="text" class="journal-year"> Jahrgang ("o. Jg." wenn kein Jahrgang angegeben)
-          <input type="text" class="journal-count"> Heftnummer
-        </div>
-        <div class="source--pages container">
-          <input type="text" class="pages"> Seiten
-        </div>
-        <div class="source--uni container">
-          <input type="text" class="uni--which"> Universität
-          <input type="text" class="uni--institute"> Institut
-        </div>
+        <!--input fields go here-->
       </div>
-      <div class="button" id="generator">
-        <h2>Langbeleg erstellen</h2>
+      <div class="container--buttons invisible" id="buttonbox">
+        <div class="button source--editor--button" id="add-editor">HerausgeberIn hinzufügen</div>
+        <div class="button" id="add-author">AutorIn hinzufügen</div>
+        <div class="button" id="generator">
+          <h2>Langbeleg erstellen</h2>
+        </div>
       </div>
       <div class="solution">
         <p id="langbeleg"></p>

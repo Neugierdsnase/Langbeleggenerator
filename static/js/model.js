@@ -19,23 +19,43 @@ let solution,
 
 //gathers the data from all the form fields using vanilla js like a baws
 function gatherData() {
-  authorsNames = authorCreator();
-  editorsNames = editorCreator();
-  titleMain = document.getElementsByClassName("title--main")[0].value;
-  titleSub = document.getElementsByClassName("title--sub")[0].value;
-  titleArticle = document.getElementsByClassName("title--contribution")[0].value;
-  publisher = document.getElementsByClassName("publisher--name")[0].value;
-  publisherPlace = document.getElementsByClassName("publisher--place")[0].value;
-  publishingYear = document.getElementsByClassName("year")[0].value;
-  edition = document.getElementsByClassName("edition")[0].value,
-  articlePages = document.getElementsByClassName("pages")[0].value;
-  articleYear = document.getElementsByClassName("journal-year")[0].value;
-  articleCount = document.getElementsByClassName("journal-count")[0].value;
-  url = document.getElementsByClassName("url")[0].value;
-  onlineReleaseDate = document.getElementsByClassName("url--date--release")[0].value;
-  onlineViewDate = document.getElementsByClassName("url--date--watched")[0].value;
-  uni = document.getElementsByClassName("uni--which")[0].value;
-  institute = document.getElementsByClassName("uni--institute")[0].value;
+  //TODO: find a better way to do this
+  //this is just nasty ugly
+  try {
+    authorsNames = authorCreator();
+  } catch (e) {console.log(e)} try {
+    editorsNames = editorCreator();
+  } catch (e) {console.log(e)} try {
+    titleMain = document.getElementsByClassName("title--main")[0].value;
+  } catch (e) {console.log(e)} try {
+    titleSub = document.getElementsByClassName("title--sub")[0].value;
+  } catch (e) {console.log(e)} try {
+    titleArticle = document.getElementsByClassName("title--contribution")[0].value;
+  } catch (e) {console.log(e)} try {
+    publisher = document.getElementsByClassName("publisher--name")[0].value;
+  } catch (e) {console.log(e)} try {
+    publisherPlace = document.getElementsByClassName("publisher--place")[0].value;
+  } catch (e) {console.log(e)} try {
+    publishingYear = document.getElementsByClassName("year")[0].value;
+  } catch (e) {console.log(e)} try {
+    edition = document.getElementsByClassName("edition")[0].value;
+  } catch (e) {console.log(e)} try {
+    articlePages = document.getElementsByClassName("pages")[0].value;
+  } catch (e) {console.log(e)} try {
+    articleYear = document.getElementsByClassName("journal-year")[0].value;
+  } catch (e) {console.log(e)} try {
+    articleCount = document.getElementsByClassName("journal-count")[0].value;
+  } catch (e) {console.log(e)} try {
+    url = document.getElementsByClassName("url")[0].value;
+  } catch (e) {console.log(e)} try {
+    onlineReleaseDate = document.getElementsByClassName("url--date--release")[0].value;
+  } catch (e) {console.log(e)} try {
+    onlineViewDate = document.getElementsByClassName("url--date--watched")[0].value;
+  } catch (e) {console.log(e)} try {
+    uni = document.getElementsByClassName("uni--which")[0].value;
+  } catch (e) {console.log(e)} try {
+    institute = document.getElementsByClassName("uni--institute")[0].value;
+  } catch (e) {console.log(e)}
 }
 
 //takes care of the different numbers of author inputs there might be (1, 2 or more)

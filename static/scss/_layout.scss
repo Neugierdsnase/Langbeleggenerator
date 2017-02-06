@@ -11,6 +11,9 @@ html {
     &--main {
       max-width: 50em;
     }
+    &--buttons {
+      flex-direction: row;
+    }
 }
 
 .source {
@@ -21,6 +24,7 @@ html {
 }
 
 .button {
+  display: inline-block;
   background-color: #002d65;
   padding: 1em;
   margin: 1em;
@@ -32,4 +36,18 @@ html {
 
 input {
   margin-top: 1.5em;
+}
+
+#generator {
+  flex-grow: 1;
+}
+
+.solution {
+  padding: 1em;
+}
+
+#about {
+  display: inline;
+  text-align: right;
+  float: right;
 }

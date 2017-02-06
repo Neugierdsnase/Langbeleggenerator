@@ -36,5 +36,10 @@ function generationTrigger () {
   }
 }
 
+
+
+let aboutButton = document.getElementById('about');
+aboutButton.addEventListener("click", function() {aboutButton.innerHTML = '<p>Made with <3 by <a href="https://twitter.com/liche_Ideen" target="_blank">K</a></p>'}, false);
+
 let mainButton = document.getElementById('generator');
 mainButton.addEventListener("click", generationTrigger, false);
