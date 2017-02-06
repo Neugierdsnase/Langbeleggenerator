@@ -21,11 +21,9 @@ let solution,
 function gatherData() {
   //TODO: find a better way to do this
   //this is just nasty ugly
+  authorsNames = authorCreator();
+  editorsNames = editorCreator();
   try {
-    authorsNames = authorCreator();
-  } catch (e) {console.log(e)} try {
-    editorsNames = editorCreator();
-  } catch (e) {console.log(e)} try {
     titleMain = document.getElementsByClassName("title--main")[0].value;
   } catch (e) {console.log(e)} try {
     titleSub = document.getElementsByClassName("title--sub")[0].value;
@@ -68,7 +66,7 @@ function authorCreator() {
   if (allAuthorsLastNamesArray.length === 1) {
     return(allAuthorsLastNamesArray[0].value + ', ' + allAuthorsFirstNamesArray[0].value);
   } else if (allAuthorsLastNamesArray.length === 2) {
-    return(allAuthorsLastNamesArray[0].value + ', ' + allAuthorsFirstNamesArray.value[0] + ' & ' + allAuthorsLastNamesArray[1].value + ', ' + allAuthorsFirstNamesArray[1].value);
+    return(allAuthorsLastNamesArray[0].value + ', ' + allAuthorsFirstNamesArray[0].value + ' & ' + allAuthorsLastNamesArray[1].value + ', ' + allAuthorsFirstNamesArray[1].value);
   } else if (allAuthorsLastNamesArray.length >= 2) {
     let sol = '';
     let i = 0;
@@ -94,7 +92,7 @@ function editorCreator() {
   if (allEditorsLastNamesArray.length === 1) {
     return(allEditorsLastNamesArray[0].value + ', ' + allEditorsFirstNamesArray[0].value);
   } else if (allEditorsLastNamesArray.length === 2) {
-    return(allEditorsLastNamesArray[0].value + ', ' + allEditorsFirstNamesArray.value[0] + ' & ' + allAuthorsLastNamesArray[1].value + ', ' + allAuthorsFirstNamesArray[1].value);
+    return(allEditorsLastNamesArray[0].value + ', ' + allEditorsFirstNamesArray[0].value + ' & ' + allAuthorsLastNamesArray[1].value + ', ' + allAuthorsFirstNamesArray[1].value);
   } else if (allEditorsLastNamesArray.length >= 2) {
     let sol = '';
     let i = 0;

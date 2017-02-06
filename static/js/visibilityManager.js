@@ -107,7 +107,7 @@ function makesBoxesAppear () {
       break;
     case "Artikel in Fachzeitschriften":
     parentObject.innerHTML = parentObject.innerHTML + author
-    + titleContribution + pages + titleMain + journal;
+    + titleContribution + year + pages + titleMain + journal;
       break;
     case "Onlinequelle":
     parentObject.innerHTML = parentObject.innerHTML + author
@@ -134,12 +134,12 @@ function multipleAuthors () {
 
 //this function appends more editor inputs in case there are multiple editors
 function multipleEditors () {
-  let anotherAuthor = `
+  let anotherEditor = `
     <input type="text" class="editor--name--first"> Vorname HerausgeberIn
     <input type="text" class="editor--name--last"> Nachname HerausgeberIn
   `
   let container = document.getElementsByClassName("source--editor")[0];
-  container.innerHTML += anotherAuthor;
+  container.innerHTML += anotherEditor;
 }
 
 module.exports = {moreAuthors : multipleAuthors,
