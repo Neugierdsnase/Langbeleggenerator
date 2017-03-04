@@ -92,7 +92,7 @@ function editorCreator() {
   if (allEditorsLastNamesArray.length === 1) {
     return(allEditorsLastNamesArray[0].value + ', ' + allEditorsFirstNamesArray[0].value);
   } else if (allEditorsLastNamesArray.length === 2) {
-    return(allEditorsLastNamesArray[0].value + ', ' + allEditorsFirstNamesArray[0].value + ' & ' + allAuthorsLastNamesArray[1].value + ', ' + allAuthorsFirstNamesArray[1].value);
+    return(allEditorsLastNamesArray[0].value + ', ' + allEditorsFirstNamesArray[0].value + ' & ' + allEditorsLastNamesArray[1].value + ', ' + allEditorsFirstNamesArray[1].value);
   } else if (allEditorsLastNamesArray.length >= 2) {
     let sol = '';
     let i = 0;
