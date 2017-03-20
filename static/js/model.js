@@ -96,7 +96,7 @@ function editorCreator() {
   } else if (allEditorsLastNamesArray.length >= 2) {
     let sol = '';
     let i = 0;
-    while (i < allEditorsorsLastNamesArray.length - 2) {
+    while (i < allEditorsLastNamesArray.length - 2) {
       sol += allEditorsLastNamesArray[i].value + ', ' + allEditorsFirstNamesArray[i].value + '; ';
       i++;
     }
